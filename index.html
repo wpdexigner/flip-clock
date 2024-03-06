@@ -1,137 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Digital Flip Clock</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
+  <title>Digital Flip Clock by NotionElite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .clock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time {
+      font-size: 4rem;
+      font-family: Oswald;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      display: flex;
+      perspective: 1000px;
+    }
+
+    .hours-box,
+    .minutes-box {
+      background-color: #F1F1EF;
+      padding: 40px 30px;
+      width: 60px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hours-box::before,
+    .minutes-box::before {
+      content: "";
+      position: absolute;
+      top: 52%;
+      left: 0;
+      right: 0;
+      height: 0.4px;
+      background-color: #d9d9d4;
+      transform: translateY(-50%);
+    }
+
+    .flip {
+      animation: fold 0.8s;
+    }
+
+    @keyframes fold {
+      0% {
+        transform: rotateX(0deg) translateZ(30px);
+      }
+      50% {
+        transform: rotateX(90deg) translateZ(30px);
+      }
+      100% {
+        transform: rotateX(0deg) translateZ(30px);
+      }
+    }
+
+    .time > div {
+      margin: 0 6px;
+    }
+
+    /* Button styles */
+    #switch-btn {
+      font-family: Montserrat;
+      font-size: 12px;
+      font-weight: 400;
+      border: solid 1px;
+      border-color: #979A9B;
+      padding: 4px 10px;
+      border-radius: 4px;
+      position: fixed;
+      bottom: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .light-mode #switch-btn {
+      background-color: #F1F1EF;
+      color: #979A9B;
+    }
+
+    .dark-mode #switch-btn {
+      background-color: #191919;
+      color: #979A9B;
+    }
+
+    .light-mode {
+      background-color: #fff;
+      color: #37352F;
+    }
+
+    .light-mode .hours-box,
+    .light-mode .minutes-box {
+      background-color: #F1F1EF;
+      color: #37352F;
+    }
+
+    .dark-mode {
+      background-color: #191919;
+      color: #979A9B;
+    }
+
+    .dark-mode .hours-box {
+      background-color: #373C3F;
+      color: #979A9B;
+    }
+
+    .dark-mode .minutes-box {
+      background-color: #373C3F;
+      color: #979A9B;
+    }
+  </style>
 </head>
 <body>
-
-<body class="light-mode">
-  <div class="clock">
-    <div class="time">
-      <div class="hours-box">
-        <div id="hours">10</div>
+  <body class="light-mode">
+    <div class="clock">
+      <div class="time">
+        <div class="hours-box">
+          <div id="hours">10</div>
+        </div>
+        <div class="minutes-box">
+          <div id="minutes">16</div>
+        </div>
       </div>
-      <div class="separator">:</div>
-      <div class="minutes-box">
-        <div id="minutes">16</div>
-      </div>
+      <button id="switch-btn">L/D</button>
     </div>
-    <button id="switch-btn">L/D</button>
-  </div>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
-
-<style>
-  body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  transition: background-color 0.3s ease;
-}
-
-.clock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.time {
-  font-size: 4rem;
-  font-family: Merriweather;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  display: flex;
-  perspective: 1000px;
-}
-
-.hours-box,
-.minutes-box {
-  background-color: #F1F1EF;
-  padding: 20px 50px;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.5s;
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-.flip {
-  animation: flip 0.5s;
-}
-
-@keyframes flip {
-  0% {
-    transform: rotateX(0deg);
-  }
-  50% {
-    transform: rotateX(90deg);
-  }
-  100% {
-    transform: rotateX(0deg);
-  }
-}
-
-.separator {
-  font-size: 4rem;
-  font-weight: bold;
-  margin: 0 10px;
-  padding-top: 10px;
-}
-
-/* Button styles */
-#switch-btn {
-  font-family: Montserrat;
-  font-size: 12px;
-  font-weight: 400;
-  border: solid 1px;
-  border-color: #979A9B;
-  padding: 4px 10px;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 20px;
-  
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.light-mode #switch-btn {
-  background-color: #F1F1EF;
-  color: #979A9B;
-}
-
-.dark-mode #switch-btn {
-  background-color: #191919;
-  color: #979A9B;
-}
-
-.light-mode {
-  background-color: #fff;
-  color: #37352F;
-}
-
-.light-mode .hours-box,
-.light-mode .minutes-box {
-  background-color: #F1F1EF;
-  color: #37352F;
-}
-
-.dark-mode {
-  background-color: #191919;
-  color: #979A9B;
-}
-
-.dark-mode .hours-box,
-.dark-mode .minutes-box {
-  background-color: #373C3F;
-  color: #979A9B;
-}
-  </style>
 
 <script>
 const hoursElement = document.getElementById('hours');
