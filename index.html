@@ -106,7 +106,7 @@
 }
 
 .dark-mode #switch-btn {
-  background-color: #2F3438;
+  background-color: #191919;
   color: #f2f2f2;
 }
 
@@ -134,10 +134,19 @@
   </style>
 
 <script>
-  const hoursElement = document.getElementById('hours');
+const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
 const body = document.body;
 const switchBtn = document.getElementById('switch-btn');
+
+// Check if there's a saved preference in localStorage
+const savedMode = localStorage.getItem('mode');
+if (savedMode === 'dark') {
+  body.classList.add('dark-mode');
+} else {
+  body.classList.add('light-mode');
+}
+
 let lastHours, lastMinutes;
 
 function updateClock() {
@@ -172,8 +181,11 @@ function updateClock() {
 function toggleMode() {
   body.classList.toggle('light-mode');
   body.classList.toggle('dark-mode');
-}
 
+  // Save the new mode in localStorage
+  const isDarkMode = body.classList.contains('dark-mode');
+  localStorage.setItem('mode', isDarkMode ? 'dark' : 'light');
+}
 
 switchBtn.addEventListener('click', toggleMode);
 
