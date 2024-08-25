@@ -23,7 +23,7 @@
     }
 
     .time {
-      font-size: 8rem;
+      font-size: 6rem;
       font-weight: 300;
       display: flex;
       perspective: 1000px;
@@ -31,10 +31,10 @@
 
     .hours-box,
     .minutes-box {
-      padding: 50px 40px;
-      width: 160px;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      padding: 30px 25px;
+      width: 120px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       transition: transform 0.5s, background-color 0.3s ease;
       transform-style: preserve-3d;
       position: relative;
@@ -50,7 +50,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(0, 0, 0, 0.1);
       transform: translateY(-50%);
     }
 
@@ -65,12 +65,12 @@
     }
 
     .time > div {
-      margin: 0 15px;
+      margin: 0 10px;
     }
 
     #switch-btn,
     #format-switch {
-      font-size: 16px;
+      font-size: 20px;
       background: none;
       border: none;
       cursor: pointer;
@@ -85,14 +85,14 @@
 
     #switch-btn {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 15px;
+      right: 15px;
     }
 
     #format-switch {
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 5px;
+      right: 5px;
     }
 
     .light-mode {
@@ -126,9 +126,14 @@
     .dark-mode #format-switch {
       color: #fff;
     }
+
+    .dark-mode .hours-box::before,
+    .dark-mode .minutes-box::before {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
-<body class="dark-mode">
+<body class="light-mode">
   <div class="clock">
     <div class="time">
       <div class="hours-box">
