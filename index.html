@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Digital Flip Clock by NotionElite</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       display: flex;
@@ -12,34 +12,34 @@
       height: 100vh;
       margin: 0;
       transition: background-color 0.3s ease;
+      font-family: 'Roboto', sans-serif;
     }
 
     .clock {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
     }
 
     .time {
-      font-size: 4rem;
-      font-family: Oswald;
-      font-weight: bold;
-      margin-bottom: 1rem;
+      font-size: 8rem;
+      font-weight: 300;
       display: flex;
       perspective: 1000px;
     }
 
     .hours-box,
     .minutes-box {
-      background-color: #F1F1EF;
-      padding: 40px 30px;
-      width: 60px;
-      border-radius: 8px;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.5s;
+      padding: 50px 40px;
+      width: 160px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s, background-color 0.3s ease;
       transform-style: preserve-3d;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
 
     .hours-box::before,
@@ -49,156 +49,144 @@
       top: 52%;
       left: 0;
       right: 0;
-      height: 0.4px;
-      background-color: #d9d9d4;
+      height: 2px;
+      background-color: rgba(255, 255, 255, 0.2);
       transform: translateY(-50%);
     }
 
     .flip {
-      animation: fold 0.8s;
+      animation: fold 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     }
 
     @keyframes fold {
-      0% {
-        transform: rotateX(0deg) translateZ(30px);
-      }
-      50% {
-        transform: rotateX(90deg) translateZ(30px);
-      }
-      100% {
-        transform: rotateX(0deg) translateZ(30px);
-      }
+      0% { transform: rotateX(0deg); }
+      50% { transform: rotateX(90deg); }
+      100% { transform: rotateX(0deg); }
     }
 
     .time > div {
-      margin: 0 6px;
+      margin: 0 15px;
     }
 
-    /* Button styles */
+    #switch-btn,
+    #format-switch {
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.2s ease;
+      outline: none;
+    }
+
+    #switch-btn:hover,
+    #format-switch:hover {
+      transform: scale(1.1);
+    }
+
     #switch-btn {
-      font-family: Montserrat;
-      font-size: 12px;
-      font-weight: 400;
-      border: solid 1px;
-      border-color: #979A9B;
-      padding: 4px 10px;
-      border-radius: 4px;
       position: fixed;
       bottom: 20px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      right: 20px;
     }
 
-    .light-mode #switch-btn {
-      background-color: #F1F1EF;
-      color: #979A9B;
-    }
-
-    .dark-mode #switch-btn {
-      background-color: #191919;
-      color: #979A9B;
+    #format-switch {
+      position: absolute;
+      top: 10px;
+      right: 20px;
     }
 
     .light-mode {
-      background-color: #fff;
-      color: #37352F;
+      background-color: #f0f0f0;
+      color: #333;
     }
 
     .light-mode .hours-box,
     .light-mode .minutes-box {
-      background-color: #F1F1EF;
-      color: #37352F;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .light-mode #switch-btn,
+    .light-mode #format-switch {
+      color: #333;
     }
 
     .dark-mode {
-      background-color: #191919;
-      color: #979A9B;
+      background-color: #1a1a1a;
+      color: #fff;
     }
 
-    .dark-mode .hours-box {
-      background-color: #373C3F;
-      color: #979A9B;
-    }
-
+    .dark-mode .hours-box,
     .dark-mode .minutes-box {
-      background-color: #373C3F;
-      color: #979A9B;
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    .dark-mode #switch-btn,
+    .dark-mode #format-switch {
+      color: #fff;
     }
   </style>
 </head>
-<body>
-  <body class="light-mode">
-    <div class="clock">
-      <div class="time">
-        <div class="hours-box">
-          <div id="hours">10</div>
-        </div>
-        <div class="minutes-box">
-          <div id="minutes">16</div>
-        </div>
+<body class="dark-mode">
+  <div class="clock">
+    <div class="time">
+      <div class="hours-box">
+        <div id="hours"></div>
       </div>
-      <button id="switch-btn">L/D</button>
+      <div class="minutes-box">
+        <div id="minutes"></div>
+      </div>
     </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+    <button id="format-switch"><i class="fas fa-clock"></i></button>
+  </div>
+  <button id="switch-btn"><i class="fas fa-adjust"></i></button>
+  
+  <script>
+    let is24HourFormat = true;
 
-<script>
-const hoursElement = document.getElementById('hours');
-const minutesElement = document.getElementById('minutes');
-const body = document.body;
-const switchBtn = document.getElementById('switch-btn');
-
-// Check if there's a saved preference in localStorage
-const savedMode = localStorage.getItem('mode');
-if (savedMode === 'dark') {
-  body.classList.add('dark-mode');
-} else {
-  body.classList.add('light-mode');
-}
-
-let lastHours, lastMinutes;
-
-function updateClock() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-
-  if (hours !== lastHours) {
-    hoursElement.parentElement.classList.add('flip');
-    setTimeout(() => {
-      hoursElement.parentElement.classList.remove('flip');
-      hoursElement.textContent = hours;
-    }, 250);
-  } else {
-    hoursElement.textContent = hours;
-  }
-
-  if (minutes !== lastMinutes) {
-    minutesElement.parentElement.classList.add('flip');
-    setTimeout(() => {
-      minutesElement.parentElement.classList.remove('flip');
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      
+      if (!is24HourFormat) {
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+      }
+      
+      const hoursElement = document.getElementById('hours');
+      const minutesElement = document.getElementById('minutes');
+      
+      if (hoursElement.textContent !== hours.toString().padStart(2, '0')) {
+        hoursElement.classList.add('flip');
+        setTimeout(() => hoursElement.classList.remove('flip'), 500);
+      }
+      
+      if (minutesElement.textContent !== minutes) {
+        minutesElement.classList.add('flip');
+        setTimeout(() => minutesElement.classList.remove('flip'), 500);
+      }
+      
+      hoursElement.textContent = hours.toString().padStart(2, '0');
       minutesElement.textContent = minutes;
-    }, 250);
-  } else {
-    minutesElement.textContent = minutes;
-  }
+    }
 
-  lastHours = hours;
-  lastMinutes = minutes;
-}
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      document.body.classList.toggle('dark-mode');
+    }
 
-function toggleMode() {
-  body.classList.toggle('light-mode');
-  body.classList.toggle('dark-mode');
+    function toggleTimeFormat() {
+      is24HourFormat = !is24HourFormat;
+      updateTime();
+    }
 
-  // Save the new mode in localStorage
-  const isDarkMode = body.classList.contains('dark-mode');
-  localStorage.setItem('mode', isDarkMode ? 'dark' : 'light');
-}
+    document.getElementById('switch-btn').addEventListener('click', toggleTheme);
+    document.getElementById('format-switch').addEventListener('click', toggleTimeFormat);
 
-switchBtn.addEventListener('click', toggleMode);
-
-setInterval(updateClock, 1000);
-updateClock();
-</script>
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>
